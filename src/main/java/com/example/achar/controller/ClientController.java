@@ -24,4 +24,10 @@ public class ClientController{
         clientService.createClient(client);
         return "ok";
     }
+
+    @PostMapping("/logIn")
+    public Client logIn(@RequestBody Client client){
+        clientService.signIn(client.getEmail(), client.getPass());
+        return client;
+    }
 }
