@@ -1,6 +1,6 @@
 package com.example.achar.service;
 
-import com.example.achar.exception.InvalidException;
+import com.example.achar.exception.InvalidDateException;
 import com.example.achar.model.Offered;
 import com.example.achar.model.Ordered;
 import com.example.achar.repository.OfferedRepo;
@@ -27,9 +27,9 @@ public class OfferedService {
         return offeredRepo.readOfferedByClientIdAndOrderedId(id1 , id2);
     }
 
-    public void creatOffered(Offered offered) throws InvalidException {
+    public void creatOffered(Offered offered){
         if (offered.getDate() < offered.getOrdered().getDate()){
-            throw new InvalidException("tarikh namonaseb");
+            throw new InvalidDateException();
         }else {
             offeredRepo.save(offered);
         }

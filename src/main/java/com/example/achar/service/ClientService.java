@@ -1,8 +1,6 @@
 package com.example.achar.service;
 
-import com.example.achar.exception.DuplicateUserException;
-import com.example.achar.exception.InvalidEntityException;
-import com.example.achar.exception.InvalidException;
+import com.example.achar.exception.*;
 import com.example.achar.model.users.Client;
 import com.example.achar.repository.ClientRepo;
 import com.example.achar.utils.Utils;
@@ -18,20 +16,20 @@ public class ClientService {
         this.clientRepo = clientRepo;
     }
 
-    public void createClient(Client client) throws InvalidException {
+    public void createClient(Client client){
         if (clientRepo.findClientByEmail(client.getEmail()) != null){
             throw new DuplicateUserException();
         }
 
         if (!client.getPass().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$")) {
-            throw new InvalidException("format pass is wrong!!!");
+            throw new InvalidPassException();
         }
         if (!client.getEmail().matches("^(.+)@(.+)$")) {
-            throw new InvalidException("format email is wrong!!!");
+            throw new InvalidEmailException();
         }
         if (client.getDate() < Utils.Date_today)
         {
-            throw new InvalidException("tarikh vase roozhaie gozashte ast");
+            throw new InvalidDateException();
         }
         clientRepo.save(client);
     }

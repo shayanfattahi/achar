@@ -1,10 +1,6 @@
 package com.example.achar.controller;
 
-import com.example.achar.exception.InvalidException;
-import com.example.achar.model.services.Services;
 import com.example.achar.model.services.UnderService;
-import com.example.achar.model.users.Client;
-import com.example.achar.model.users.Technician;
 import com.example.achar.service.ManagerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +17,13 @@ public class ManagerController {
     }
 
     @PostMapping("/registerService")
-    public String registerService(@RequestBody String name) throws InvalidException {
+    public String registerService(@RequestBody String name){
         managerService.createServices(name);
         return "ok";
     }
 
     @PostMapping("/registerUnderService")
-    public String registerUnderService(@RequestBody UnderService underService) throws InvalidException {
+    public String registerUnderService(@RequestBody UnderService underService){
         managerService.createUnderService(underService);
         return "ok";
     }

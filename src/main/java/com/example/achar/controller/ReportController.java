@@ -1,8 +1,6 @@
 package com.example.achar.controller;
 
-import com.example.achar.exception.InvalidException;
 import com.example.achar.model.Ordered;
-import com.example.achar.model.users.Technician;
 import com.example.achar.service.ClientService;
 import com.example.achar.service.ReportService;
 import com.example.achar.service.SubjobService;
@@ -27,14 +25,14 @@ public class ReportController {
     }
 
     @PostMapping("/createOrder/{clientId}/{underServiceId}")
-    public void createOrder(@RequestBody Ordered ordered, @PathVariable String clientId , @PathVariable Long underServiceId) throws InvalidException {
+    public void createOrder(@RequestBody Ordered ordered, @PathVariable String clientId , @PathVariable Long underServiceId){
         ordered.setClient(clientService.findByEmail(clientId));
         ordered.setUnderService(subjobService.readById(underServiceId));
         reportService.createOrder(ordered);
     }
 
     @GetMapping("/readLogInClientOrder/{clientId}")
-    public Optional<Ordered> readLogInClientOrder(@PathVariable Long clientId) throws InvalidException {
+    public Optional<Ordered> readLogInClientOrder(@PathVariable Long clientId){
         return reportService.readLogInClientOrder(clientId);
     }
 

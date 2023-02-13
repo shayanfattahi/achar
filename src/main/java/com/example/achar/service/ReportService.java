@@ -1,6 +1,8 @@
 package com.example.achar.service;
 
-import com.example.achar.exception.InvalidException;
+import com.example.achar.exception.InvalidDateException;
+import com.example.achar.exception.InvalidMoneyException;
+import com.example.achar.exception.InvalidOutPutException;
 import com.example.achar.model.Ordered;
 import com.example.achar.model.users.Technician;
 import com.example.achar.repository.ReportRepo;
@@ -21,19 +23,19 @@ public class ReportService {
         this.technicianService = technicianService;
     }
 
-    public void createOrder(Ordered ordered) throws InvalidException {
+    public void createOrder(Ordered ordered){
         if (ordered.getPrice() < ordered.getUnderService().getPrices()){
-            throw new InvalidException("gheimate namonaseb");
+            throw new InvalidMoneyException();
         }
         if (ordered.getDate() < Utils.Date_today){
-            throw new InvalidException("tarikh vase rooz haie gozashte ast");
+            throw new InvalidDateException();
         }
         reportRepo.save(ordered);
     }
 
-    public Optional<Ordered> readLogInClientOrder(long id) throws InvalidException {
+    public Optional<Ordered> readLogInClientOrder(long id){
         if (reportRepo.readOrderedByClientId(id) == null){
-            throw new InvalidException("null ast");
+            throw new InvalidOutPutException();
         }else {
             return reportRepo.readOrderedByClientId(id);
         }

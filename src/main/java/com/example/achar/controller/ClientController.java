@@ -1,6 +1,5 @@
 package com.example.achar.controller;
 
-import com.example.achar.exception.InvalidException;
 import com.example.achar.model.users.Client;
 import com.example.achar.service.ClientService;
 import org.springframework.stereotype.Controller;
@@ -20,7 +19,7 @@ public class ClientController{
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody Client client) throws InvalidException {
+    public String register(@RequestBody Client client){
         clientService.createClient(client);
         return "ok";
     }

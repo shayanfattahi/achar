@@ -1,6 +1,5 @@
 package com.example.achar.controller;
 
-import com.example.achar.exception.InvalidException;
 import com.example.achar.model.Offered;
 import com.example.achar.service.OfferedService;
 import com.example.achar.service.ReportService;
@@ -23,7 +22,7 @@ public class OfferedController {
     }
 
     @PostMapping("/createOffered/{orderId}")
-    public void createOffered(@PathVariable Offered offered , @PathVariable Long orderId) throws InvalidException {
+    public void createOffered(@PathVariable Offered offered , @PathVariable Long orderId){
         offered.setOrdered(reportService.readById(orderId).get());
         offered.setClient(reportService.readById(orderId).get().getClient());
         offered.setUnderService(reportService.readById(orderId).get().getUnderService());

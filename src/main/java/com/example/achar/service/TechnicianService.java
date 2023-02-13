@@ -1,8 +1,6 @@
 package com.example.achar.service;
 
-import com.example.achar.exception.DuplicateUserException;
-import com.example.achar.exception.InvalidEntityException;
-import com.example.achar.exception.InvalidException;
+import com.example.achar.exception.*;
 import com.example.achar.model.users.Technician;
 import com.example.achar.repository.TechnicianRepo;
 import com.example.achar.utils.Utils;
@@ -18,20 +16,20 @@ public class TechnicianService {
         this.technicianRepo = technicianRepo;
     }
 
-    public void createTechnician(Technician technician) throws InvalidException {
+    public void createTechnician(Technician technician){
         if (technicianRepo.findClientByEmail(technician.getEmail()) != null){
             throw new DuplicateUserException();
         }
 
         if (!technician.getPass().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$")) {
-            throw new InvalidException("format pass is wrong!!!");
+            throw new InvalidPassException();
         }
         if (!technician.getEmail().matches("^(.+)@(.+)$")) {
-            throw new InvalidException("format email is wrong!!!");
+            throw new InvalidEmailException();
         }
         if (technician.getDate() < Utils.Date_today)
         {
-            throw new InvalidException("tarikh vase roozhaie gozashte ast");
+            throw new InvalidDateException();
         }
         technicianRepo.save(technician);
     }
