@@ -4,12 +4,10 @@ import com.example.achar.exception.InvalidException;
 import com.example.achar.model.services.Services;
 import com.example.achar.model.services.UnderService;
 import com.example.achar.model.users.Client;
+import com.example.achar.model.users.Technician;
 import com.example.achar.service.ManagerService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Controller
@@ -33,4 +31,16 @@ public class ManagerController {
         managerService.createUnderService(underService);
         return "ok";
     }
+
+    @PutMapping("/updateUnderService")
+    public UnderService editUnderServices(@RequestBody UnderService underService){
+        managerService.editUnderServices(underService.getName() , underService.getText() , underService.getPrices());
+        return underService;
+    }
+
+    @GetMapping("/changeStatusToActive/{email}")
+    public void changeStatusToActive(@PathVariable String email){
+        managerService.changeStatusToActive(email);
+    }
+
 }
