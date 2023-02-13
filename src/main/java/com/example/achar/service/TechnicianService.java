@@ -29,10 +29,10 @@ public class TechnicianService {
         if (!technician.getEmail().matches("^(.+)@(.+)$")) {
             throw new InvalidException("format email is wrong!!!");
         }
-//        if (technician.getDate() < Utils.Date_today)
-//        {
-//            throw new InvalidException("tarikh vase roozhaie gozashte ast");
-//        }
+        if (technician.getDate() < Utils.Date_today)
+        {
+            throw new InvalidException("tarikh vase roozhaie gozashte ast");
+        }
         technicianRepo.save(technician);
     }
 

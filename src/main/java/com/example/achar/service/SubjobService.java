@@ -18,7 +18,7 @@ public class SubjobService {
         underServicesRepo.save(underService);
     }
 
-    public UnderService readById(long id){
+    public UnderService readById(Long id){
         return underServicesRepo.readUnderServiceById(id);
     }
 

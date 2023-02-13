@@ -29,10 +29,10 @@ public class ClientService {
         if (!client.getEmail().matches("^(.+)@(.+)$")) {
             throw new InvalidException("format email is wrong!!!");
         }
-//        if (client.getDate() < Utils.Date_today)
-//        {
-//            throw new InvalidException("tarikh vase roozhaie gozashte ast");
-//        }
+        if (client.getDate() < Utils.Date_today)
+        {
+            throw new InvalidException("tarikh vase roozhaie gozashte ast");
+        }
         clientRepo.save(client);
     }
 
