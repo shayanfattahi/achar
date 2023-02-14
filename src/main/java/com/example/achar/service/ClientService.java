@@ -44,4 +44,16 @@ public class ClientService {
     public Client findByEmail(String email){
         return clientRepo.findClientByEmail(email);
     }
+
+    public void changePass(String email , String pass , String passNew){
+        Optional<Client> client = signIn(email , pass);
+        if (passNew.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$")){
+            client.get().setPass(passNew);
+            clientRepo.save(client.get());
+        }else {
+            throw new InvalidPassException();
+        }
+    }
+
+
 }
