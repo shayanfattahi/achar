@@ -1,6 +1,7 @@
 package com.example.achar.service;
 
 import com.example.achar.exception.*;
+import com.example.achar.model.users.Client;
 import com.example.achar.model.users.Technician;
 import com.example.achar.repository.TechnicianRepo;
 import com.example.achar.utils.Utils;
@@ -47,5 +48,15 @@ public class TechnicianService {
 
     public void create(Technician technician){
         technicianRepo.save(technician);
+    }
+
+    public void changePass(String email , String pass , String passNew){
+        Optional<Technician> te = signIn(email , pass);
+        if (passNew.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$")){
+            te.get().setPass(passNew);
+            technicianRepo.save(te.get());
+        }else {
+            throw new InvalidPassException();
+        }
     }
 }

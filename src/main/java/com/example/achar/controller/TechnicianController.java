@@ -1,12 +1,12 @@
 package com.example.achar.controller;
 
+import com.example.achar.model.users.TecStatus;
 import com.example.achar.model.users.Technician;
 import com.example.achar.service.TechnicianService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @Controller
@@ -21,13 +21,18 @@ public class TechnicianController {
 
     @PostMapping("/register")
     public String register(@RequestBody Technician technician){
+        technician.setTecStatus(TecStatus.NEW);
         technicianService.createTechnician(technician);
         return "ok";
     }
 
     @PostMapping("/logIn")
-    public Technician logIn(@RequestBody Technician technician){
-        technicianService.signIn(technician.getEmail() , technician.getPass());
-        return technician;
+    public Optional<Technician> logIn(@RequestBody Technician technician){
+        return technicianService.signIn(technician.getEmail() , technician.getPass());
+    }
+
+    @PutMapping("/changePass/{email}/{pass}/{passNew}")
+    public void changePass(@PathVariable String email , @PathVariable String pass , @PathVariable String passNew ){
+        technicianService.changePass(email , pass , passNew);
     }
 }

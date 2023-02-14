@@ -15,11 +15,11 @@ public interface ReportRepo extends JpaRepository<Ordered , Long> {
 
     Optional<Ordered>readOrderedByTechnicianIdAndClientId(Long id1,Long id2);
 
-    Optional<Ordered>readOrderedByAcceptedIsFalseAndClientId(Long id);
-
-    Optional<Ordered>readOrderedByAcceptedIsTrueAndClientId(Long id);
-
-    Optional<Ordered>readOrderedByAcceptedIsTrueAndDonedIsTrueAndClientId(Long id);
+//    Optional<Ordered>readOrderedByAcceptedIsFalseAndClientId(Long id);
+//
+//    Optional<Ordered>readOrderedByAcceptedIsTrueAndClientId(Long id);
+//
+//    Optional<Ordered>readOrderedByAcceptedIsTrueAndDonedIsTrueAndClientId(Long id);
 
     Optional<Ordered>readOrderedById(Long id);
 

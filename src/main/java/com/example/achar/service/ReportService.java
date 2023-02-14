@@ -42,18 +42,18 @@ public class ReportService {
             return reportRepo.readOrderedByClientId(id);
         }
     }
-
-    public Optional<Ordered> indefinitService(long id){
-        return reportRepo.readOrderedByAcceptedIsFalseAndClientId(id);
-    }
-
-    public Optional<Ordered> acceptedService(long id){
-        return reportRepo.readOrderedByAcceptedIsTrueAndClientId(id);
-    }
-
-    public Optional<Ordered> doneServices(long id){
-        return reportRepo.readOrderedByAcceptedIsTrueAndDonedIsTrueAndClientId(id);
-    }
+//
+//    public Optional<Ordered> indefinitService(long id){
+//        return reportRepo.readOrderedByAcceptedIsFalseAndClientId(id);
+//    }
+//
+//    public Optional<Ordered> acceptedService(long id){
+//        return reportRepo.readOrderedByAcceptedIsTrueAndClientId(id);
+//    }
+//
+//    public Optional<Ordered> doneServices(long id){
+//        return reportRepo.readOrderedByAcceptedIsTrueAndDonedIsTrueAndClientId(id);
+//    }
 
     public Optional<Ordered> readById(Long id){
         return reportRepo.readOrderedById(id);
