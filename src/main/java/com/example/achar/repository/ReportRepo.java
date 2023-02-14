@@ -1,6 +1,6 @@
 package com.example.achar.repository;
 
-import com.example.achar.model.Ordered;
+import com.example.achar.model.order.Ordered;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -2,7 +2,8 @@ package com.example.achar.service;
 
 import com.example.achar.exception.InvalidDateException;
 import com.example.achar.model.Offered;
-import com.example.achar.model.Ordered;
+import com.example.achar.model.order.Ordered;
+import com.example.achar.model.order.OrderedStatus;
 import com.example.achar.repository.OfferedRepo;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +53,7 @@ public class OfferedService {
         Optional<Ordered> ordered = reportService.readById(offered.getOrdered().getId());
         ordered.get().setPrice(offered.getPrice());
         ordered.get().setDate(offered.getDate());
-        ordered.get().setAccepted(true);
+        ordered.get().setOrderedStatus(OrderedStatus.WAITINGFORCOMING);
         ordered.get().setTechnician(offered.getTechnician());
         offered.setAccepted(true);
         offeredRepo.save(offered);

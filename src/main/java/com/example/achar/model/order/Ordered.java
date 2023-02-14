@@ -1,4 +1,4 @@
-package com.example.achar.model;
+package com.example.achar.model.order;
 
 import com.example.achar.model.services.UnderService;
 import com.example.achar.model.users.Client;
@@ -22,8 +22,8 @@ public class Ordered {
     String text;
     long date;
     String address;
-    boolean accepted;
-    boolean doned;
+    @Enumerated(EnumType.STRING)
+    OrderedStatus orderedStatus;
 
     @ManyToOne
     UnderService underService;

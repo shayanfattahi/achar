@@ -1,6 +1,6 @@
 package com.example.achar.controller;
 
-import com.example.achar.model.Ordered;
+import com.example.achar.model.order.Ordered;
 import com.example.achar.service.ClientService;
 import com.example.achar.service.ReportService;
 import com.example.achar.service.SubjobService;

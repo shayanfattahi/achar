@@ -3,7 +3,8 @@ package com.example.achar.service;
 import com.example.achar.exception.InvalidDateException;
 import com.example.achar.exception.InvalidMoneyException;
 import com.example.achar.exception.InvalidOutPutException;
-import com.example.achar.model.Ordered;
+import com.example.achar.model.order.Ordered;
+import com.example.achar.model.order.OrderedStatus;
 import com.example.achar.model.users.Technician;
 import com.example.achar.repository.ReportRepo;
 import com.example.achar.utils.Utils;
@@ -30,6 +31,7 @@ public class ReportService {
         if (ordered.getDate() < Utils.Date_today){
             throw new InvalidDateException();
         }
+        ordered.setOrderedStatus(OrderedStatus.WAITINGFOROFFERED);
         reportRepo.save(ordered);
     }
 
@@ -67,7 +69,7 @@ public class ReportService {
 
     public void makeIsDone(Long id , double pointN){
         Optional<Ordered> ordered = readById(id);
-        ordered.get().setDoned(true);
+        ordered.get().setOrderedStatus(OrderedStatus.DONE);
         Technician technician = ordered.get().getTechnician();
         Long salary = technician.getMoney();
         technician.setMoney(salary + ordered.get().getPrice());

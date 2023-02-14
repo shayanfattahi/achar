@@ -1,14 +1,12 @@
 package com.example.achar.model;
 
+import com.example.achar.model.users.Technician;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Getter
@@ -20,4 +18,6 @@ public class PhotoTec {
     Long id;
     byte[] image;
     String imagePath;
+    @OneToOne
+    Technician technician;
 }

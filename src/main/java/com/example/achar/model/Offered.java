@@ -1,5 +1,6 @@
 package com.example.achar.model;
 
+import com.example.achar.model.order.Ordered;
 import com.example.achar.model.services.UnderService;
 import com.example.achar.model.users.Client;
 import com.example.achar.model.users.Technician;
@@ -22,6 +23,7 @@ public class Offered {
     long price;
     String text;
     long date;
+    long time;
     boolean accepted;
 
     @ManyToOne
