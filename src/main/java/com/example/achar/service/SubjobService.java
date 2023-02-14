@@ -29,4 +29,8 @@ public class SubjobService {
     public List<UnderService>readByService(Long id){
         return underServicesRepo.readUnderServiceByServicesId(id);
     }
+
+    public void delete(UnderService underService){
+        underServicesRepo.delete(underService);
+    }
 }

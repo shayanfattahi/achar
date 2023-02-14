@@ -39,4 +39,8 @@ public class JobService {
         serviceRepo.delete(services);
     }
 
+    public Services readById(Long id){
+        return serviceRepo.readServicesById(id);
+    }
+
 }

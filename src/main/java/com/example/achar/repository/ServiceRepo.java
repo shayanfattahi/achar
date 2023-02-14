@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface ServiceRepo extends JpaRepository<Services , Long> {
 
     Services readServicesByName(String name);
+
+    Services readServicesById(Long id);
 }

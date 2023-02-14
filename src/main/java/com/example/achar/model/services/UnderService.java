@@ -20,7 +20,7 @@ public class UnderService {
     Long id;
     @Column(unique = true)
     String name;
-    long prices;
+    Long prices;
     String text;
     @ManyToOne
     Services services;

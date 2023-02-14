@@ -59,4 +59,12 @@ public class TechnicianService {
             throw new InvalidPassException();
         }
     }
+
+    public void updateTechnician(Technician technician){
+        technicianRepo.save(technician);
+    }
+
+    public void delete(Technician technician){
+        technicianRepo.delete(technician);
+    }
 }
