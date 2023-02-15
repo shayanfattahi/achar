@@ -1,5 +1,12 @@
 package com.example.achar.controller;
 
+import com.example.achar.dto.client.ClientDto;
+import com.example.achar.dto.client.ClientMapper;
+import com.example.achar.dto.client.GetClientDto;
+import com.example.achar.dto.technician.GetTechnicianDto;
+import com.example.achar.dto.technician.TechnicianDto;
+import com.example.achar.dto.technician.TechnicianMapper;
+import com.example.achar.model.users.Client;
 import com.example.achar.model.users.TecStatus;
 import com.example.achar.model.users.Technician;
 import com.example.achar.service.TechnicianService;
@@ -19,16 +26,24 @@ public class TechnicianController {
         this.technicianService = technicianService;
     }
 
+    private Technician dtoToModelWithMapStruct(TechnicianDto technicianDto) {
+        return TechnicianMapper.INSTANCE.dtoToModel(technicianDto);
+    }
+
+    private GetTechnicianDto modelToGetDto(Technician technician){
+        return TechnicianMapper.INSTANCE.modelToGetDto(technician);
+    }
+
     @PostMapping("/register")
-    public String register(@RequestBody Technician technician){
-        technician.setTecStatus(TecStatus.NEW);
-        technicianService.createTechnician(technician);
+    public String register(@RequestBody TechnicianDto technicianDto){
+        technicianDto.setTecStatus(TecStatus.NEW);
+        technicianService.createTechnician(dtoToModelWithMapStruct(technicianDto));
         return "ok";
     }
 
     @PostMapping("/logIn")
-    public Optional<Technician> logIn(@RequestBody Technician technician){
-        return technicianService.signIn(technician.getEmail() , technician.getPass());
+    public GetTechnicianDto logIn(@RequestBody Technician technician){
+        return modelToGetDto(technicianService.signIn(technician.getEmail() , technician.getPass()).get());
     }
 
     @PutMapping("/changePass/{email}/{pass}/{passNew}")
