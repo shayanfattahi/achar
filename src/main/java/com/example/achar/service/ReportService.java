@@ -102,12 +102,25 @@ public class ReportService {
         }
     }
 
-    public void isPayed(Long id) {
+    public void isPayed(Long id , double point) {
         Optional<Ordered> ordered = readById(id);
         if (!ordered.isPresent() || !ordered.get().getOrderedStatus().equals(OrderedStatus.DONE)) {
             throw new InvalidOutPutException();
         } else {
-            System.out.println("pedaram dar oomad!!!");
+            ordered.get().setOrderedStatus(OrderedStatus.PAYED);
+            Technician technician = ordered.get().getTechnician();
+            Long salary = technician.getMoney();
+            technician.setMoney(salary + ordered.get().getPrice());
+            if (point >= 0 && point <= 5){
+                double pointTotal = technician.getPoint() + point;
+                if (ordered.get().getFinishTime() - ordered.get().getStartedTime() > ordered.get().getTime()){
+                    pointTotal = pointTotal - (ordered.get().getFinishTime() + ordered.get().getStartedTime() - ordered.get().getTime());
+                }
+                technician.setPoint(pointTotal);
+                technicianService.create(technician);
+            }else{
+                throw new InvalidOutPutException();
+            }
         }
     }
 }

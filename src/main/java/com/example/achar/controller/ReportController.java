@@ -55,4 +55,9 @@ public class ReportController {
     public void isDone(@PathVariable Long orderedId){
         reportService.isDone(orderedId);
     }
+
+    @PutMapping("/isPayed/{orderedId}/{point}")
+    public void isPayed(@PathVariable Long orderedId , @PathVariable double point){
+        reportService.isPayed(orderedId , point);
+    }
 }
