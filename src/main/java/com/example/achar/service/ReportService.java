@@ -78,4 +78,36 @@ public class ReportService {
         reportRepo.save(ordered.get());
         technicianService.create(technician);
     }
+
+    public void isStarted(Long id){
+        Optional<Ordered> ordered = readById(id);
+        if (!ordered.isPresent()){
+            throw new InvalidOutPutException();
+        }else{
+            ordered.get().setOrderedStatus(OrderedStatus.STARTED);
+            ordered.get().setStartedTime(10);
+            reportRepo.save(ordered.get());
+        }
+    }
+
+    public void isDone(Long id){
+        Optional<Ordered> ordered = readById(id);
+        if (!ordered.isPresent() || !ordered.get().getOrderedStatus().equals(OrderedStatus.STARTED)){
+            throw new InvalidOutPutException();
+        }else {
+            ordered.get().setOrderedStatus(OrderedStatus.DONE);
+            ordered.get().setFinishTime(20);
+            reportRepo.save(ordered.get());
+
+        }
+    }
+
+    public void isPayed(Long id) {
+        Optional<Ordered> ordered = readById(id);
+        if (!ordered.isPresent() || !ordered.get().getOrderedStatus().equals(OrderedStatus.DONE)) {
+            throw new InvalidOutPutException();
+        } else {
+            System.out.println("pedaram dar oomad!!!");
+        }
+    }
 }

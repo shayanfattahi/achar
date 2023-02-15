@@ -4,6 +4,7 @@ import com.example.achar.model.order.Ordered;
 import com.example.achar.model.services.UnderService;
 import com.example.achar.model.users.Client;
 import com.example.achar.model.users.Technician;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,15 +27,19 @@ public class Offered {
     long time;
     boolean accepted;
 
+    @JsonIgnore
     @ManyToOne
     UnderService underService;
 
+    @JsonIgnore
     @ManyToOne
     Client client;
 
+    @JsonIgnore
     @ManyToOne
     Technician technician;
 
+    @JsonIgnore
     @ManyToOne
     Ordered ordered;
 }

@@ -32,6 +32,7 @@ public class OfferedService {
         if (offered.getDate() < offered.getOrdered().getDate()){
             throw new InvalidDateException();
         }else {
+            offered.setAccepted(false);
             offeredRepo.save(offered);
         }
     }
@@ -55,6 +56,7 @@ public class OfferedService {
         ordered.get().setDate(offered.getDate());
         ordered.get().setOrderedStatus(OrderedStatus.WAITINGFORCOMING);
         ordered.get().setTechnician(offered.getTechnician());
+        ordered.get().setTime(offered.getTime());
         offered.setAccepted(true);
         offeredRepo.save(offered);
         reportService.createOrderByTechnician(ordered.get());

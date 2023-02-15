@@ -46,4 +46,13 @@ public class ReportController {
         reportService.makeIsDone(id , point);
     }
 
+    @PutMapping("/isStart/{orderedId}")
+    public void isStart(@PathVariable Long orderedId){
+        reportService.isStarted(orderedId);
+    }
+
+    @PutMapping("/isDone/{orderedId}")
+    public void isDone(@PathVariable Long orderedId){
+        reportService.isDone(orderedId);
+    }
 }
