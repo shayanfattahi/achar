@@ -1,5 +1,8 @@
 package com.example.achar.controller;
 
+import com.example.achar.dto.client.ClientDto;
+import com.example.achar.dto.client.ClientMapper;
+import com.example.achar.dto.client.GetClientDto;
 import com.example.achar.model.users.Client;
 import com.example.achar.service.ClientService;
 import org.springframework.stereotype.Controller;
@@ -15,16 +18,24 @@ public class ClientController{
         this.clientService = clientService;
     }
 
+    private Client dtoToModelWithMapStruct(ClientDto clientDto) {
+        return ClientMapper.INSTANCE.dtoToModel(clientDto);
+    }
+
+    private GetClientDto modelToGetDto(Client client){
+        return ClientMapper.INSTANCE.modelToGetDto(client);
+    }
+
     @PostMapping("/register")
-    public String register(@RequestBody Client client){
-        clientService.createClient(client);
-        return "ok";
+    public ClientDto register(@RequestBody ClientDto clientDto){
+        clientService.createClient(dtoToModelWithMapStruct(clientDto));
+        return clientDto;
     }
 
     @PostMapping("/logIn")
-    public Client logIn(@RequestBody Client client){
+    public GetClientDto logIn(@RequestBody Client client){
         clientService.signIn(client.getEmail(), client.getPass());
-        return client;
+        return modelToGetDto(client);
     }
 
     @PutMapping("/changePass/{email}/{pass}/{passNew}")
