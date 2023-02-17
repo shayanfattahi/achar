@@ -8,6 +8,8 @@ import com.example.achar.service.ClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @Controller
 @RequestMapping("/Client")
@@ -32,10 +34,10 @@ public class ClientController{
         return clientDto;
     }
 
-    @PostMapping("/logIn")
-    public GetClientDto logIn(@RequestBody Client client){
-        clientService.signIn(client.getEmail(), client.getPass());
-        return modelToGetDto(client);
+    @PostMapping("/logIn/{email}/{pass}")
+    public GetClientDto logIn(@PathVariable String email , @PathVariable String pass){
+        Optional<Client> client = clientService.signIn(email, pass);
+        return modelToGetDto(client.get());
     }
 
     @PutMapping("/changePass/{email}/{pass}/{passNew}")

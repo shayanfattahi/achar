@@ -12,4 +12,5 @@ public class GetClientDto {
     String firstName;
     String lastName;
     String email;
+    long money;
 }
