@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface ReportRepo extends JpaRepository<Ordered , Long> {
 
-    Optional<Ordered> readOrderedByClientId(Long id);
+    List<Ordered> readOrderedByClientId(Long id);
 
     Optional<Ordered>readOrderedByTechnicianIdAndClientId(Long id1,Long id2);
 
@@ -23,6 +23,6 @@ public interface ReportRepo extends JpaRepository<Ordered , Long> {
 
     Optional<Ordered>readOrderedById(Long id);
 
-    @Query(value ="select * from ordered where under_service_id in (select under_services_id from technician_under_services where technician_id=?1)" , nativeQuery = true)
+    @Query(value ="select * from ordered where under_service_id in (select under_services_id from technician_under_services where technician_id=?1) and ordered.ordered_status = 'WAITINGFOROFFERED'" , nativeQuery = true)
     List<Ordered> findSuitable(Long id);
 }

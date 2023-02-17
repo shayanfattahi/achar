@@ -67,4 +67,8 @@ public class TechnicianService {
     public void delete(Technician technician){
         technicianRepo.delete(technician);
     }
+
+    public Technician readById(Long id){
+        return technicianRepo.findTechnicianById(id);
+    }
 }

@@ -1,17 +1,12 @@
 package com.example.achar.service;
 
 import com.example.achar.exception.DuplicateUserException;
-import com.example.achar.exception.InvalidEntityException;
 import com.example.achar.exception.InvalidOutPutException;
 import com.example.achar.model.services.Services;
 import com.example.achar.model.services.UnderService;
 import com.example.achar.model.users.TecStatus;
 import com.example.achar.model.users.Technician;
-import com.fasterxml.jackson.databind.exc.InvalidNullException;
 import org.springframework.stereotype.Service;
-
-import javax.swing.plaf.PanelUI;
-import java.util.Collections;
 import java.util.Set;
 
 @Service

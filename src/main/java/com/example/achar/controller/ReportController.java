@@ -1,6 +1,13 @@
 package com.example.achar.controller;
 
+import com.example.achar.dto.client.ClientDto;
+import com.example.achar.dto.client.ClientMapper;
+import com.example.achar.dto.client.GetClientDto;
+import com.example.achar.dto.ordered.GetOrderedDto;
+import com.example.achar.dto.ordered.OrderedDto;
+import com.example.achar.dto.ordered.OrderedMapper;
 import com.example.achar.model.order.Ordered;
+import com.example.achar.model.users.Client;
 import com.example.achar.service.ClientService;
 import com.example.achar.service.ReportService;
 import com.example.achar.service.SubjobService;
@@ -24,16 +31,25 @@ public class ReportController {
         this.clientService = clientService;
     }
 
+    private Ordered dtoToModelWithMapStruct(OrderedDto orderedDto) {
+        return OrderedMapper.INSTANCE.dtoToModel(orderedDto);
+    }
+
+    private List<GetOrderedDto> modelToGetDto(List<Ordered> ordered){
+        return OrderedMapper.INSTANCE.modelToGetDto(ordered);
+    }
+
     @PostMapping("/createOrder/{clientId}/{underServiceId}")
-    public void createOrder(@RequestBody Ordered ordered, @PathVariable String clientId , @PathVariable Long underServiceId){
+    public void createOrder(@RequestBody OrderedDto orderedDto, @PathVariable String clientId , @PathVariable String underServiceId){
+        Ordered ordered = dtoToModelWithMapStruct(orderedDto);
         ordered.setClient(clientService.findByEmail(clientId));
-        ordered.setUnderService(subjobService.readById(underServiceId));
+        ordered.setUnderService(subjobService.readByName(underServiceId));
         reportService.createOrder(ordered);
     }
 
     @GetMapping("/readLogInClientOrder/{clientId}")
-    public Optional<Ordered> readLogInClientOrder(@PathVariable Long clientId){
-        return reportService.readLogInClientOrder(clientId);
+    public List<GetOrderedDto> readLogInClientOrder(@PathVariable Long clientId){
+        return modelToGetDto(reportService.readLogInClientOrder(clientId));
     }
 
     @GetMapping("/readSuitableTech/{technicianId}")

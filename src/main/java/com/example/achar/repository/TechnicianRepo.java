@@ -12,4 +12,6 @@ public interface TechnicianRepo extends JpaRepository<Technician , Long> {
     Technician findClientByEmail(String email);
 
     Optional<Technician> findClientByEmailAndPass(String email , String pass);
+
+    Technician findTechnicianById(Long id);
 }

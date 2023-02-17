@@ -5,6 +5,7 @@ import com.example.achar.exception.InvalidMoneyException;
 import com.example.achar.exception.InvalidOutPutException;
 import com.example.achar.model.order.Ordered;
 import com.example.achar.model.order.OrderedStatus;
+import com.example.achar.model.users.TecStatus;
 import com.example.achar.model.users.Technician;
 import com.example.achar.repository.ReportRepo;
 import com.example.achar.utils.Utils;
@@ -25,17 +26,22 @@ public class ReportService {
     }
 
     public void createOrder(Ordered ordered){
+        if (ordered.getUnderService() == null)
+            throw new InvalidOutPutException();
         if (ordered.getPrice() < ordered.getUnderService().getPrices()){
             throw new InvalidMoneyException();
         }
         if (ordered.getDate() < Utils.Date_today){
             throw new InvalidDateException();
         }
+        if (ordered.getClient() == null){
+            throw new InvalidOutPutException();
+        }
         ordered.setOrderedStatus(OrderedStatus.WAITINGFOROFFERED);
         reportRepo.save(ordered);
     }
 
-    public Optional<Ordered> readLogInClientOrder(long id){
+    public List<Ordered> readLogInClientOrder(long id){
         if (reportRepo.readOrderedByClientId(id) == null){
             throw new InvalidOutPutException();
         }else {
@@ -60,7 +66,10 @@ public class ReportService {
     }
 
     public List<Ordered> readSuitableTech(Long id){
-        return reportRepo.findSuitable(id);
+        if (technicianService.readById(id).getTecStatus().equals(TecStatus.ACTIVE) && !reportRepo.findSuitable(id).isEmpty()){
+            return reportRepo.findSuitable(id);
+        }else
+            throw new InvalidOutPutException();
     }
 
     public void createOrderByTechnician(Ordered ordered){
