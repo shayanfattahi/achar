@@ -18,6 +18,7 @@ public class TechnicianService {
     }
 
     public void createTechnician(Technician technician){
+        technician.setDate(Utils.Date_today);
         if (technicianRepo.findClientByEmail(technician.getEmail()) != null){
             throw new DuplicateUserException();
         }

@@ -1,5 +1,6 @@
 package com.example.achar.service;
 
+import com.example.achar.dto.PayedDto;
 import com.example.achar.exception.InvalidDateException;
 import com.example.achar.exception.InvalidMoneyException;
 import com.example.achar.exception.InvalidOutPutException;
@@ -11,6 +12,7 @@ import com.example.achar.repository.ReportRepo;
 import com.example.achar.utils.Utils;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,18 +50,6 @@ public class ReportService {
             return reportRepo.readOrderedByClientId(id);
         }
     }
-//
-//    public Optional<Ordered> indefinitService(long id){
-//        return reportRepo.readOrderedByAcceptedIsFalseAndClientId(id);
-//    }
-//
-//    public Optional<Ordered> acceptedService(long id){
-//        return reportRepo.readOrderedByAcceptedIsTrueAndClientId(id);
-//    }
-//
-//    public Optional<Ordered> doneServices(long id){
-//        return reportRepo.readOrderedByAcceptedIsTrueAndDonedIsTrueAndClientId(id);
-//    }
 
     public Optional<Ordered> readById(Long id){
         return reportRepo.readOrderedById(id);
@@ -111,7 +101,8 @@ public class ReportService {
         }
     }
 
-    public void isPayed(Long id , double point) {
+    public void isPayed(Long id , PayedDto payedDto) {
+        ArrayList<String> text = new ArrayList<>();
         Optional<Ordered> ordered = readById(id);
         if (!ordered.isPresent() || !ordered.get().getOrderedStatus().equals(OrderedStatus.DONE)) {
             throw new InvalidOutPutException();
@@ -120,12 +111,17 @@ public class ReportService {
             Technician technician = ordered.get().getTechnician();
             Long salary = technician.getMoney();
             technician.setMoney(salary + ordered.get().getPrice());
-            if (point >= 0 && point <= 5){
-                double pointTotal = technician.getPoint() + point;
-                if (ordered.get().getFinishTime() - ordered.get().getStartedTime() > ordered.get().getTime()){
+            if (payedDto.getPoint() >= 0 && payedDto.getPoint() <= 5){
+                double pointTotal = technician.getPoint() + payedDto.getPoint();
+                if (ordered.get().getFinishTime() - ordered.get().getStartedTime() - ordered.get().getTime() > ordered.get().getTime()){
                     pointTotal = pointTotal - (ordered.get().getFinishTime() + ordered.get().getStartedTime() - ordered.get().getTime());
                 }
                 technician.setPoint(pointTotal);
+                if (technician.getPoint() < 0){
+                    technician.setTecStatus(TecStatus.INACTIVE);
+                }
+                technician.getReviews().add(payedDto.getText());
+                System.out.println(technician.getReviews().get(2));
                 technicianService.create(technician);
             }else{
                 throw new InvalidOutPutException();

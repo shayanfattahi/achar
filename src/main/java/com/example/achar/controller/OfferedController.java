@@ -33,9 +33,9 @@ public class OfferedController {
         offeredService.creatOffered(offered);
     }
 
-    @GetMapping("/offeredSortByPrice/{clientId}")
-    public List<Offered> readOfferedSortByPrice(@PathVariable Long clientId) {
-        return offeredService.readOfferedSortByPrice(clientId);
+    @GetMapping("/offeredSortByPrice/{clientId}/{orderedId}")
+    public List<Offered> readOfferedSortByPrice(@PathVariable Long clientId , @PathVariable Long orderedId) {
+        return offeredService.readOfferedSortByPrice(clientId , orderedId);
     }
 
     @GetMapping("/offeredSortByTechnician/{clientId}")
@@ -43,8 +43,8 @@ public class OfferedController {
         return offeredService.readTopTechnician(clientId);
     }
 
-    @PutMapping("/acceptOffered/{clientId}/{orderId}/{offeredId}")
-    public void acceptOffered(@PathVariable Long clientId , @PathVariable Long orderId ,@PathVariable Long offeredId ){
-        offeredService.acceptOffered(clientId , orderId , offeredId);
+    @PutMapping("/acceptOffered/{offeredId}")
+    public void acceptOffered(@PathVariable Long offeredId ){
+        offeredService.acceptOffered(offeredId);
     }
 }

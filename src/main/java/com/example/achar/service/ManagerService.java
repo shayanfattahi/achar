@@ -52,9 +52,13 @@ public class ManagerService {
 
     public void editUnderServices(String name , String text , long money){
         UnderService underService = underServicesService.readByName(name);
-        underService.setText(text);
-        underService.setPrices(money);
-        underServicesService.createUnderServices(underService);
+        if(underService == null){
+            throw new InvalidOutPutException();
+        }else {
+            underService.setText(text);
+            underService.setPrices(money);
+            underServicesService.createUnderServices(underService);
+        }
     }
 
     public void deleteService(String name){

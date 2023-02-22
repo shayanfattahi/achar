@@ -14,7 +14,7 @@ public interface OfferedRepo extends JpaRepository<Offered , Long> {
 
     List<Offered> readOfferedByClientIdAndOrderedId(Long id1 , Long id2);
 
-    List<Offered> findOfferedByClientIdOrderByPriceAsc(Long id);
+    List<Offered> findOfferedByClientIdAndOrderedIdOrderByPriceAsc(Long id , Long id2);
 
     @Query(value = "Select * from offered\n" +
             "INNER JOIN technician t on offered.technician_id = t.id\n" +

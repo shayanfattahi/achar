@@ -17,6 +17,7 @@ public class ClientService {
     }
 
     public void createClient(Client client){
+        client.setDate(Utils.Date_today);
         if (clientRepo.findClientByEmail(client.getEmail()) != null){
             throw new DuplicateUserException();
         }

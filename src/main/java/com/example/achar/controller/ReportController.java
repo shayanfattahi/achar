@@ -1,5 +1,6 @@
 package com.example.achar.controller;
 
+import com.example.achar.dto.PayedDto;
 import com.example.achar.dto.client.ClientDto;
 import com.example.achar.dto.client.ClientMapper;
 import com.example.achar.dto.client.GetClientDto;
@@ -72,8 +73,8 @@ public class ReportController {
         reportService.isDone(orderedId);
     }
 
-    @PutMapping("/isPayed/{orderedId}/{point}")
-    public void isPayed(@PathVariable Long orderedId , @PathVariable double point){
-        reportService.isPayed(orderedId , point);
+    @PutMapping("/isPayed/{orderedId}")
+    public void isPayed(@RequestBody PayedDto payedDto , @PathVariable Long orderedId){
+        reportService.isPayed(orderedId , payedDto);
     }
 }
