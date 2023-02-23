@@ -8,6 +8,7 @@ import com.example.achar.service.ClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -29,7 +30,7 @@ public class ClientController{
     }
 
     @PostMapping("/register")
-    public ClientDto register(@RequestBody ClientDto clientDto){
+    public ClientDto register(@Valid @RequestBody ClientDto clientDto){
         clientService.createClient(dtoToModelWithMapStruct(clientDto));
         return clientDto;
     }
@@ -41,7 +42,8 @@ public class ClientController{
     }
 
     @PutMapping("/changePass/{email}/{pass}/{passNew}")
-    public void changePass(@PathVariable String email , @PathVariable String pass , @PathVariable String passNew ){
+    public String changePass(@PathVariable String email , @PathVariable String pass , @PathVariable String passNew ){
         clientService.changePass(email , pass , passNew);
+        return "ok";
     }
 }

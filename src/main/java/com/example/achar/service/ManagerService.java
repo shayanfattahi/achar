@@ -1,12 +1,19 @@
 package com.example.achar.service;
 
+import com.example.achar.dto.technician.GetTechnicianDto;
 import com.example.achar.exception.DuplicateUserException;
 import com.example.achar.exception.InvalidOutPutException;
 import com.example.achar.model.services.Services;
 import com.example.achar.model.services.UnderService;
+import com.example.achar.model.users.Client;
 import com.example.achar.model.users.TecStatus;
 import com.example.achar.model.users.Technician;
+import com.example.achar.repository.ManagerRepo;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -17,11 +24,16 @@ public class ManagerService {
     JobService servicesService;
     final
     SubjobService underServicesService;
+    final
+    ClientService clientService;
+    final ManagerRepo managerRepo;
 
-    public ManagerService(TechnicianService technicianService, JobService servicesService, SubjobService underServicesService) {
+    public ManagerService(TechnicianService technicianService, JobService servicesService, SubjobService underServicesService, ClientService clientService, ManagerRepo managerRepo) {
         this.technicianService = technicianService;
         this.servicesService = servicesService;
         this.underServicesService = underServicesService;
+        this.clientService = clientService;
+        this.managerRepo = managerRepo;
     }
 
     public void changeStatusToActive(String email){
@@ -82,14 +94,44 @@ public class ManagerService {
     }
 
     public void deleteTechnicianAndUnderService(String email , String name){
-//        Technician technician = technicianService.findByEmail(email);
+        Technician technician = technicianService.findByEmail(email);
         UnderService underService = underServicesService.readByName(name);
-        underService.getTechnician().forEach((technician1 -> {
-            if (technician1.getEmail().equals(email)) {
-                underServicesService.delete(underService);
-                technicianService.delete(technician1);
+        managerRepo.deleteUnderserviceAndTech(technician.getId(), underService.getId());
+    }
 
-            }
-        }));
+    public List<Client> getClientByName(String name){
+        return clientService.getClientByName(name);
+    }
+
+    public List<Client> getClientByLatName(String lastname){
+        return clientService.getClientByLastName(lastname);
+    }
+
+    public Client getClientByEmail(String email){
+        return clientService.getClientByEmail(email);
+    }
+
+    public List<Technician> getTechnicianByPoint(){
+        return technicianService.getTechnicianByPoint();
+    }
+
+    public List<Technician> getTechnicianByName(String name){
+        return technicianService.getTechnicianByName(name);
+    }
+
+    public List<Technician> getTechnicianByLastName(String lastname){
+        return technicianService.getTechnicianByLastName(lastname);
+    }
+
+    public Technician getTechnicianByEmail(String email){
+        return technicianService.getTechnicianByEmail(email);
+    }
+
+    public List<Technician> getTechnicianByUnderServices(Long id){
+        return technicianService.getTechnicianByUnderService(id);
+    }
+
+    public List<Technician> getTechByUnder(Long id){
+        return technicianService.getTechByUnderService(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.achar.model.services;
 
 import com.example.achar.model.users.Technician;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

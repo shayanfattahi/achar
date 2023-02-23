@@ -13,6 +13,7 @@ import com.example.achar.service.TechnicianService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -35,7 +36,7 @@ public class TechnicianController {
     }
 
     @PostMapping("/register")
-    public String register(@RequestBody TechnicianDto technicianDto){
+    public String register(@Valid @RequestBody TechnicianDto technicianDto){
         technicianDto.setTecStatus(TecStatus.NEW);
         technicianService.createTechnician(dtoToModelWithMapStruct(technicianDto));
         return "ok";

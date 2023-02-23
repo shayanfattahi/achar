@@ -15,6 +15,7 @@ import com.example.achar.service.SubjobService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class ReportController {
     }
 
     @PostMapping("/createOrder/{clientId}/{underServiceId}")
-    public void createOrder(@RequestBody OrderedDto orderedDto, @PathVariable String clientId , @PathVariable String underServiceId){
+    public void createOrder(@Valid @RequestBody OrderedDto orderedDto, @PathVariable String clientId , @PathVariable String underServiceId){
         Ordered ordered = dtoToModelWithMapStruct(orderedDto);
         ordered.setClient(clientService.findByEmail(clientId));
         ordered.setUnderService(subjobService.readByName(underServiceId));

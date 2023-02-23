@@ -1,83 +1,14 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <link rel="stylesheet" href="stylesheet.css">-->
-<!--    <title>payment page</title>-->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"-->
-<!--          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">-->
-<!--    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css" integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe" crossorigin="anonymous">-->
-<!--</head>-->
-<!--<body>-->
-<!--<div class="container">-->
-
-<!--    <div class="card-holder">-->
-<!--        <div class="card-box bg-news">-->
-<!--            <div class="row">-->
-<!--                <div class="col-lg-6">-->
-<!--                    <div class="img-box">-->
-<!--                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="img-fluid" />-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col-lg-6">-->
-
-<!--                    <form>-->
-<!--                        <div class="card-details">-->
-<!--                            <h3 class="title">اطلاعات کارت</h3>-->
-<!--                            <div class="row">-->
-<!--                                <div class="form-group col-sm-5">-->
-<!--                                    <div class="inner-addon right-addon">-->
-<!--                                        <input type="text" class="form-control" placeholder="MM" aria-label="MM" aria-describedby="basic-addon1">-->
-<!--                                        <span class="date-separator">/</span>-->
-<!--                                        <input type="text" class="form-control" placeholder="YY" aria-label="YY" aria-describedby="basic-addon1">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="form-group col-sm-7">-->
-<!--                                    <label for="">تاریخ انقضا کارت</label>-->
-<!--                                    <div class="input-group expiration-date">-->
-<!--                                        <label for="card-holder">Card Holder</label>-->
-<!--                                        <i class="far fa-user"></i>-->
-<!--                                        <input id="card-holder" type="text" class="form-control" placeholder="Card Holder" aria-label="Card Holder" aria-describedby="basic-addon1">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="form-group col-sm-8">-->
-<!--                                    <div class="inner-addon right-addon">-->
-<!--                                        <label for="card-number">شماره کارت</label>-->
-<!--                                        <i class="far fa-credit-card"></i>-->
-<!--                                        <input id="card-number" type="text" class="form-control" placeholder="Card Number" aria-label="Card Holder" aria-describedby="basic-addon1">-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="form-group col-sm-4">-->
-<!--                                    <label for="cvc">cvv2</label>-->
-<!--                                    <input id="cvc" type="text" class="form-control" placeholder="CVC" aria-label="Card Holder" aria-describedby="basic-addon1">-->
-<!--                                </div>-->
-<!--                                <div class="form-group col-sm-12">-->
-<!--                                    <button type="button" class="btn btn-primary btn-block">تایید</button>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </form>-->
-
-<!--                </div>&lt;!&ndash;/col-lg-6 &ndash;&gt;-->
-
-<!--            </div>&lt;!&ndash;/row &ndash;&gt;-->
-<!--        </div>&lt;!&ndash;/card-box &ndash;&gt;-->
-<!--    </div>&lt;!&ndash;/card-holder &ndash;&gt;-->
-
-<!--</div>&lt;!&ndash;/container &ndash;&gt;-->
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css" integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.rtlcss.com/bootstrap/v4.5.3/css/bootstrap.min.css"
+          integrity="sha384-JvExCACAZcHNJEc7156QaHXTnQL3hQBixvj5RV5buE7vgnNEzzskDtx9NQ4p6BJe" crossorigin="anonymous">
 
     <link rel="stylesheet" href="stylesheet.css">
 
@@ -88,35 +19,106 @@
 
 
 </head>
-<body class="bg-total">
+
+<body class="bg-total" onload="createCaptcha()">
 <main class="container rounded-3 p-3 mt-5 col-4">
+    <div class="my-3 text-white bg-dark p-2 text-center rounded-1">زمان باقی مانده = <span id="timer"></span></div>
     <div class="">
-        <p>اطلاعات کارت</p>
+        <p class="h5 mt-4 text-light">اطلاعات کارت</p>
     </div>
-    <form>
+    <form class="p-3">
         <div class="mb-3">
-            <label for="cardNumber" class="form-label">:شماره کارت</label>
+            <label for="cardNumber" class="form-label text-light fs-5">:شماره کارت</label>
             <input type="text" class="form-control" id="cardNumber">
         </div>
         <div class="mb-3">
-            <label for="cvv2" class="form-label">:cvv2</label>
+            <label for="cvv2" class="form-label text-light fs-5">:cvv2</label>
             <input type="text" class="form-control" id="cvv2">
         </div>
-        <button class="btn btn-primary" id="paymentBtn">تایید</button>
+        <div class="d-flex justify-content-end gap-2 mt-4 mb-2">
+            <div class="bg-light rounded-1 px-3" id="captcha">
+            </div>
+            <button class="regenerateCaptchaBtn btn btn-dark" onclick="createCaptcha()">
+                refresh
+            </button>
+        </div>
+        <input class="form-control" type="text" placeholder="Enter Captcha" id="cpatchaTextBox" />
+        <button onclick="validateCaptcha()" class="btn btn-primary fs-5 mt-3" id="paymentBtn">تایید</button>
     </form>
 </main>
+<script>
+    setTimeout(function () { window.location = "http://google.com"; }, 300000);
+    document.getElementById('timer').innerHTML =
+        05 + ":" + 00;
+    startTimer();
+    function startTimer() {
+        var presentTime = document.getElementById('timer').innerHTML;
+        var timeArray = presentTime.split(/[:]+/);
+        var m = timeArray[0];
+        var s = checkSecond((timeArray[1] - 1));
+        if (s == 59) { m = m - 1 }
+        if (m < 0) {
+            return
+        }
+        document.getElementById('timer').innerHTML =
+            m + ":" + s;
+        console.log(m)
+        setTimeout(startTimer, 1000);
+    }
+    function checkSecond(sec) {
+        if (sec < 10 && sec >= 0) { sec = "0" + sec };
+        if (sec < 0) { sec = "59" };
+        return sec;
+    }
+    var code;
+    function createCaptcha() {
+        // clear the contents of captcha div first
+        document.getElementById('captcha').innerHTML = "";
+        var charsArray =
+            "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@!#$%^&*";
+        var lengthOtp = 6;
+        var captcha = [];
+        for (var i = 0; i < lengthOtp; i++) {
+            //below code will not allow Repetition of Characters
+            var index = Math.floor(Math.random() * charsArray.length + 1); //get the next character from the array
+            if (captcha.indexOf(charsArray[index]) == -1)
+                captcha.push(charsArray[index]);
+            else i--;
+        }
+        var canv = document.createElement("canvas");
+        canv.id = "captcha";
+        canv.width = 100;
+        canv.height = 50;
+        var ctx = canv.getContext("2d");
+        ctx.font = "25px Georgia";
+        ctx.strokeText(captcha.join(""), 0, 30);
+        //storing captcha so that can validate you can save it somewhere else according to your specific requirements
+        code = captcha.join("");
+        document.getElementById("captcha").appendChild(canv); // adds the canvas to the body element
+    }
+    function validateCaptcha() {
+        event.preventDefault();
+        debugger
+        if (document.getElementById("cpatchaTextBox").value == code) {
+            alert("Valid Captcha")
+        } else {
+            alert("Invalid Captcha. try Again");
+            createCaptcha();
+        }
+    }
+</script>
 </body>
-<script
-        src="https://code.jquery.com/jquery-3.6.3.slim.js"
-        integrity="sha256-DKU1CmJ8kBuEwumaLuh9Tl/6ZB6jzGOBV/5YpNE2BWc="
-        crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.3.slim.js"
+        integrity="sha256-DKU1CmJ8kBuEwumaLuh9Tl/6ZB6jzGOBV/5YpNE2BWc=" crossorigin="anonymous">
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.14/sweetalert2.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script>
-
     $("#paymentBtn").on('click', (e) => {
         e.preventDefault();
         const cardNumber = document.getElementById('cardNumber').value;
@@ -143,4 +145,5 @@
     })
 
 </script>
+
 </html>

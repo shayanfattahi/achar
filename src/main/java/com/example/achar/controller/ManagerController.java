@@ -1,10 +1,14 @@
 package com.example.achar.controller;
 
 import com.example.achar.model.services.UnderService;
+import com.example.achar.model.users.Client;
+import com.example.achar.model.users.TecStatus;
+import com.example.achar.model.users.Technician;
 import com.example.achar.service.JobService;
 import com.example.achar.service.ManagerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @Controller
@@ -39,8 +43,9 @@ public class ManagerController {
     }
 
     @PutMapping("/changeStatusToActive/{email}")
-    public void changeStatusToActive(@PathVariable String email){
+    public String changeStatusToActive(@PathVariable String email){
         managerService.changeStatusToActive(email);
+        return "ok";
     }
 
     @DeleteMapping("/deleteServices/{name}")
@@ -56,6 +61,46 @@ public class ManagerController {
     @DeleteMapping("/deleteTechnicianAndUnderService/{email}/{name}")
     public void deleteTechnicianAndUnderService(@PathVariable String email, @PathVariable String name ){
         managerService.deleteTechnicianAndUnderService(email , name);
+    }
+
+    @GetMapping("/getClientByName/{name}")
+    public List<Client> getClientByName(@PathVariable String name){
+        return managerService.getClientByName(name);
+    }
+
+    @GetMapping("/getTechnicianByPoint")
+    public List<Technician> getTechnicianByPoint(){
+        return managerService.getTechnicianByPoint();
+    }
+
+    @GetMapping("/getClientByLastName/{lastname}")
+    public List<Client> getClientByLastName(@PathVariable String lastname){
+        return managerService.getClientByLatName(lastname);
+    }
+
+    @GetMapping("/getClientByEmail/{email}")
+    public Client getClientByEmailName(@PathVariable String email){
+        return managerService.getClientByEmail(email);
+    }
+
+    @GetMapping("/getTechnicianByName/{name}")
+    public List<Technician> getTechnicianByName(@PathVariable String name){
+        return managerService.getTechnicianByName(name);
+    }
+
+    @GetMapping("/getTechnicianByLastName/{lastname}")
+    public List<Technician> getTechnicianByLastName(@PathVariable String lastname){
+        return managerService.getTechnicianByLastName(lastname);
+    }
+
+    @GetMapping("/getTechnicianByEmail/{email}")
+    public Technician getTechnicianByEmail(@PathVariable String email){
+        return managerService.getTechnicianByEmail(email);
+    }
+
+    @GetMapping("/getTechnicianByUnderServices/{id}")
+    public List<Technician> getTechnicianByUnderServices(@PathVariable Long id){
+        return managerService.getTechByUnder(id);
     }
 
 

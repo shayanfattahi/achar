@@ -16,17 +16,18 @@ public class PhotoTecService {
 
     public void insertPhoto(PhotoTec photoTec){
         File file = new File("C:/Users/Ava/Desktop/Untitled.png");
-        String Filename = file.getName();
-        int i = file.toString().lastIndexOf(".");
-        String format;
-        if (i == -1){
-            format = null;
-        }else {
-            format = Filename.substring(i + 1);
-        }
-        if(format.equals("jpg")) {
-            photoTec.setImage(imageTOByte(file));
-        }
+//        String Filename = file.getName();
+//        int i = file.toString().lastIndexOf(".");
+//        String format;
+//        if (i == -1){
+//            format = null;
+//        }else {
+//            format = Filename.substring(i + 1);
+//        }
+//        if(format.equals("jpg")) {
+//            photoTec.setImage(imageTOByte(file));
+//        }
+        photoTec.setImage(imageTOByte(file));
         photoTecRepo.save(photoTec);
 
     }

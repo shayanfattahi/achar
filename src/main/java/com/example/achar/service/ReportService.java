@@ -6,6 +6,7 @@ import com.example.achar.exception.InvalidMoneyException;
 import com.example.achar.exception.InvalidOutPutException;
 import com.example.achar.model.order.Ordered;
 import com.example.achar.model.order.OrderedStatus;
+import com.example.achar.model.users.Client;
 import com.example.achar.model.users.TecStatus;
 import com.example.achar.model.users.Technician;
 import com.example.achar.repository.ReportRepo;
@@ -21,10 +22,11 @@ public class ReportService {
 
     final ReportRepo reportRepo;
     final TechnicianService technicianService;
-
-    public ReportService(ReportRepo orderedRepo, TechnicianService technicianService) {
+    final ClientService clientService;
+    public ReportService(ReportRepo orderedRepo, TechnicianService technicianService, ClientService clientService) {
         this.reportRepo = orderedRepo;
         this.technicianService = technicianService;
+        this.clientService = clientService;
     }
 
     public void createOrder(Ordered ordered){
@@ -111,18 +113,24 @@ public class ReportService {
             Technician technician = ordered.get().getTechnician();
             Long salary = technician.getMoney();
             technician.setMoney(salary + ordered.get().getPrice());
+            Client client = ordered.get().getClient();
+            if (client.getMoney() - ordered.get().getPrice() < 0){
+                throw new InvalidMoneyException();
+            }
+            client.setMoney(client.getMoney() - ordered.get().getPrice());
             if (payedDto.getPoint() >= 0 && payedDto.getPoint() <= 5){
-                double pointTotal = technician.getPoint() + payedDto.getPoint();
-                if (ordered.get().getFinishTime() - ordered.get().getStartedTime() - ordered.get().getTime() > ordered.get().getTime()){
-                    pointTotal = pointTotal - (ordered.get().getFinishTime() + ordered.get().getStartedTime() - ordered.get().getTime());
+                double pointTotal = technician.getPoint();
+                if (ordered.get().getFinishTime() - ordered.get().getStartedTime() > ordered.get().getTime()){
+                    pointTotal = pointTotal - (ordered.get().getFinishTime() - ordered.get().getStartedTime() - ordered.get().getTime()) + payedDto.getPoint();
                 }
                 technician.setPoint(pointTotal);
                 if (technician.getPoint() < 0){
                     technician.setTecStatus(TecStatus.INACTIVE);
                 }
-                technician.getReviews().add(payedDto.getText());
-                System.out.println(technician.getReviews().get(2));
+//                technician.getReviews().add(payedDto.getText());
+//                System.out.println(technician.getReviews().get(2));
                 technicianService.create(technician);
+                clientService.create(client);
             }else{
                 throw new InvalidOutPutException();
             }

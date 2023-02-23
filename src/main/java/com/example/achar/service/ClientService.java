@@ -4,8 +4,14 @@ import com.example.achar.exception.*;
 import com.example.achar.model.users.Client;
 import com.example.achar.repository.ClientRepo;
 import com.example.achar.utils.Utils;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -56,5 +62,31 @@ public class ClientService {
         }
     }
 
+    @PersistenceContext
+    private EntityManager em;
+    List<Client> getClientByName(String name){
+        Criteria crit = em.unwrap(Session.class).createCriteria(Client.class);
+        crit.add(Restrictions.eq("firstName", name));
+        List<Client> students = crit.list();
+        return students;
+    }
+
+    List<Client> getClientByLastName(String lastname){
+        Criteria crit = em.unwrap(Session.class).createCriteria(Client.class);
+        crit.add(Restrictions.eq("lastName", lastname));
+        List<Client> students = crit.list();
+        return students;
+    }
+
+    Client getClientByEmail(String email){
+        Criteria crit = em.unwrap(Session.class).createCriteria(Client.class);
+        crit.add(Restrictions.eq("lastName", email));
+        List<Client> students = crit.list();
+        return students.get(0);
+    }
+
+    public void create(Client client){
+        clientRepo.save(client);
+    }
 
 }

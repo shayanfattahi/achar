@@ -1,6 +1,7 @@
 package com.example.achar.service;
 
 import com.example.achar.exception.DuplicateUserException;
+import com.example.achar.exception.InvalidOutPutException;
 import com.example.achar.model.services.Services;
 import com.example.achar.model.services.UnderService;
 import com.example.achar.repository.ServiceRepo;
@@ -40,6 +41,9 @@ public class JobService {
     }
 
     public Services readById(Long id){
+        if (serviceRepo.readServicesById(id) == null){
+            throw new InvalidOutPutException();
+        }
         return serviceRepo.readServicesById(id);
     }
 
